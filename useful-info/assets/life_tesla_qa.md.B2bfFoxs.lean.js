@@ -1,1 +1,0 @@
-import{_ as e,c as t,o as a}from"./chunks/framework.zxqDFHm1.js";const f=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"life/tesla/qa.md","filePath":"life/tesla/qa.md","lastUpdated":null}'),s={name:"life/tesla/qa.md"};function r(o,l,n,c,i,d){return a(),t("div")}const _=e(s,[["render",r]]);export{f as __pageData,_ as default};
