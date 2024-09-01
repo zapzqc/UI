@@ -1,235 +1,321 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
- <HEAD>
-  <TITLE>2020年最好看的花瓣</TITLE>
-  <META NAME="Generator" CONTENT="EditPlus">
-  <META NAME="Author" CONTENT="">
-  <META NAME="Keywords" CONTENT="">
-  <META NAME="Description" CONTENT="">
-  <style>
-  html, body{
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
-.container{
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  background-color: #000000;
-}
-  </style>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6826040978803389" crossorigin="anonymous"></script>
- </HEAD>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>生日快乐</title>
+    <style>
+        body {
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-color: #f2f2f2;
+            font-family: 'Your Chosen Font', cursive;
+            animation: backgroundAnimation 5s infinite;
+        }
  
- <BODY>
+        #snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
  
- <div id="jsi-cherry-container" class="container"></div>
-  <script>
-  var RENDERER = {
-	INIT_CHERRY_BLOSSOM_COUNT : 30,
-	MAX_ADDING_INTERVAL : 10,
-	
-	init : function(){
-		this.setParameters();
-		this.reconstructMethods();
-		this.createCherries();
-		this.render();
-	},
-	setParameters : function(){
-		this.$container = $('#jsi-cherry-container');
-		this.width = this.$container.width();
-		this.height = this.$container.height();
-		this.context = $('<canvas />').attr({width : this.width, height : this.height}).appendTo(this.$container).get(0).getContext('2d');
-		this.cherries = [];
-		this.maxAddingInterval = Math.round(this.MAX_ADDING_INTERVAL * 1000 / this.width);
-		this.addingInterval = this.maxAddingInterval;
-	},
-	reconstructMethods : function(){
-		this.render = this.render.bind(this);
-	},
-	createCherries : function(){
-		for(var i = 0, length = Math.round(this.INIT_CHERRY_BLOSSOM_COUNT * this.width / 1000); i < length; i++){
-			this.cherries.push(new CHERRY_BLOSSOM(this, true));
-		}
-	},
-	render : function(){
-		requestAnimationFrame(this.render);
-		this.context.clearRect(0, 0, this.width, this.height);
-		
-		this.cherries.sort(function(cherry1, cherry2){
-			return cherry1.z - cherry2.z;
-		});
-		for(var i = this.cherries.length - 1; i >= 0; i--){
-			if(!this.cherries[i].render(this.context)){
-				this.cherries.splice(i, 1);
-			}
-		}
-		if(--this.addingInterval == 0){
-			this.addingInterval = this.maxAddingInterval;
-			this.cherries.push(new CHERRY_BLOSSOM(this, false));
-		}
-	}
-};
-var CHERRY_BLOSSOM = function(renderer, isRandom){
-	this.renderer = renderer;
-	this.init(isRandom);
-};
-CHERRY_BLOSSOM.prototype = {
-	FOCUS_POSITION : 300,
-	FAR_LIMIT : 600,
-	MAX_RIPPLE_COUNT : 100,
-	RIPPLE_RADIUS : 100,
-	SURFACE_RATE : 0.5,
-	SINK_OFFSET : 20,
-	
-	init : function(isRandom){
-		this.x = this.getRandomValue(-this.renderer.width, this.renderer.width);
-		this.y = isRandom ? this.getRandomValue(0, this.renderer.height) : this.renderer.height * 1.5;
-		this.z = this.getRandomValue(0, this.FAR_LIMIT);
-		this.vx = this.getRandomValue(-2, 2);
-		this.vy = -2;
-		this.theta = this.getRandomValue(0, Math.PI * 2);
-		this.phi = this.getRandomValue(0, Math.PI * 2);
-		this.psi = 0;
-		this.dpsi = this.getRandomValue(Math.PI / 600, Math.PI / 300);
-		this.opacity = 0;
-		this.endTheta = false;
-		this.endPhi = false;
-		this.rippleCount = 0;
-		
-		var axis = this.getAxis(),
-			theta = this.theta + Math.ceil(-(this.y + this.renderer.height * this.SURFACE_RATE) / this.vy) * Math.PI / 500;
-		theta %= Math.PI * 2;
-		
-		this.offsetY = 40 * ((theta <= Math.PI / 2 || theta >= Math.PI * 3 / 2) ? -1 : 1);
-		this.thresholdY = this.renderer.height / 2 + this.renderer.height * this.SURFACE_RATE * axis.rate;
-		this.entityColor = this.renderer.context.createRadialGradient(0, 40, 0, 0, 40, 80);
-		this.entityColor.addColorStop(0, 'hsl(330, 70%, ' + 50 * (0.3 + axis.rate) + '%)');
-		this.entityColor.addColorStop(0.05, 'hsl(330, 40%,' + 55 * (0.3 + axis.rate) + '%)');
-		this.entityColor.addColorStop(1, 'hsl(330, 20%, ' + 70 * (0.3 + axis.rate) + '%)');
-		this.shadowColor = this.renderer.context.createRadialGradient(0, 40, 0, 0, 40, 80);
-		this.shadowColor.addColorStop(0, 'hsl(330, 40%, ' + 30 * (0.3 + axis.rate) + '%)');
-		this.shadowColor.addColorStop(0.05, 'hsl(330, 40%,' + 30 * (0.3 + axis.rate) + '%)');
-		this.shadowColor.addColorStop(1, 'hsl(330, 20%, ' + 40 * (0.3 + axis.rate) + '%)');
-	},
-	getRandomValue : function(min, max){
-		return min + (max - min) * Math.random();
-	},
-	getAxis : function(){
-		var rate = this.FOCUS_POSITION / (this.z + this.FOCUS_POSITION),
-			x = this.renderer.width / 2 + this.x * rate,
-			y = this.renderer.height / 2 - this.y * rate;
-		return {rate : rate, x : x, y : y};
-	},
-	renderCherry : function(context, axis){
-		context.beginPath();
-		context.moveTo(0, 40);
-		context.bezierCurveTo(-60, 20, -10, -60, 0, -20);
-		context.bezierCurveTo(10, -60, 60, 20, 0, 40);
-		context.fill();
-		
-		for(var i = -4; i < 4; i++){
-			context.beginPath();
-			context.moveTo(0, 40);
-			context.quadraticCurveTo(i * 12, 10, i * 4, -24 + Math.abs(i) * 2);
-			context.stroke();
-		}
-	},
-	render : function(context){
-		var axis = this.getAxis();
-		
-		if(axis.y == this.thresholdY && this.rippleCount < this.MAX_RIPPLE_COUNT){
-			context.save();
-			context.lineWidth = 2;
-			context.strokeStyle = 'hsla(0, 0%, 100%, ' + (this.MAX_RIPPLE_COUNT - this.rippleCount) / this.MAX_RIPPLE_COUNT + ')';
-			context.translate(axis.x + this.offsetY * axis.rate * (this.theta <= Math.PI ? -1 : 1), axis.y);
-			context.scale(1, 0.3);
-			context.beginPath();
-			context.arc(0, 0, this.rippleCount / this.MAX_RIPPLE_COUNT * this.RIPPLE_RADIUS * axis.rate, 0, Math.PI * 2, false);
-			context.stroke();
-			context.restore();
-			this.rippleCount++;
-		}
-		if(axis.y < this.thresholdY || (!this.endTheta || !this.endPhi)){
-			if(this.y <= 0){
-				this.opacity = Math.min(this.opacity + 0.01, 1);
-			}
-			context.save();
-			context.globalAlpha = this.opacity;
-			context.fillStyle = this.shadowColor;
-			context.strokeStyle = 'hsl(330, 30%,' + 40 * (0.3 + axis.rate) + '%)';
-			context.translate(axis.x, Math.max(axis.y, this.thresholdY + this.thresholdY - axis.y));
-			context.rotate(Math.PI - this.theta);
-			context.scale(axis.rate * -Math.sin(this.phi), axis.rate);
-			context.translate(0, this.offsetY);
-			this.renderCherry(context, axis);
-			context.restore();
-		}
-		context.save();
-		context.fillStyle = this.entityColor;
-		context.strokeStyle = 'hsl(330, 40%,' + 70 * (0.3 + axis.rate) + '%)';
-		context.translate(axis.x, axis.y + Math.abs(this.SINK_OFFSET * Math.sin(this.psi) * axis.rate));
-		context.rotate(this.theta);
-		context.scale(axis.rate * Math.sin(this.phi), axis.rate);
-		context.translate(0, this.offsetY);
-		this.renderCherry(context, axis);
-		context.restore();
-		
-		if(this.y <= -this.renderer.height / 4){
-			if(!this.endTheta){
-				for(var theta = Math.PI / 2, end = Math.PI * 3 / 2; theta <= end; theta += Math.PI){
-					if(this.theta < theta && this.theta + Math.PI / 200 > theta){
-						this.theta = theta;
-						this.endTheta = true;
-						break;
-					}
-				}
-			}
-			if(!this.endPhi){
-				for(var phi = Math.PI / 8, end = Math.PI * 7 / 8; phi <= end; phi += Math.PI * 3 / 4){
-					if(this.phi < phi && this.phi + Math.PI / 200 > phi){
-						this.phi = Math.PI / 8;
-						this.endPhi = true;
-						break;
-					}
-				}
-			}
-		}
-		if(!this.endTheta){
-			if(axis.y == this.thresholdY){
-				this.theta += Math.PI / 200 * ((this.theta < Math.PI / 2 || (this.theta >= Math.PI && this.theta < Math.PI * 3 / 2)) ? 1 : -1);
-			}else{
-				this.theta += Math.PI / 500;
-			}
-			this.theta %= Math.PI * 2;
-		}
-		if(this.endPhi){
-			if(this.rippleCount == this.MAX_RIPPLE_COUNT){
-				this.psi += this.dpsi;
-				this.psi %= Math.PI * 2;
-			}
-		}else{
-			this.phi += Math.PI / ((axis.y == this.thresholdY) ? 200 : 500);
-			this.phi %= Math.PI;
-		}
-		if(this.y <= -this.renderer.height * this.SURFACE_RATE){
-			this.x += 2;
-			this.y = -this.renderer.height * this.SURFACE_RATE;
-		}else{
-			this.x += this.vx;
-			this.y += this.vy;
-		}
-		return this.z > -this.FOCUS_POSITION && this.z < this.FAR_LIMIT && this.x < this.renderer.width * 1.5;
-	}
-};
-$(function(){
-	RENDERER.init();
-});
-  </script>
- </BODY>
-</HTML>
+        .snowflake {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #fff;
+            border-radius: 50%;
+            opacity: 0.8;
+            pointer-events: none;
+            animation: snowfall linear infinite;
+        }
+ 
+        @keyframes snowfall {
+            0% {
+                transform: translateY(-100%);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+ 
+        #slideshow {
+            width: 500px;
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto; /* 添加这行代码使其居中 */
+        }
+ 
+        #slideshow img {
+            max-width: 100%;
+            max-height: 100%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* 居中对齐 */
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+ 
+        #slideshow img.active {
+            opacity: 1;
+        }
+ 
+        @keyframes backgroundAnimation {
+            0% {
+                background-color: #ffafbd;
+            }
+            50% {
+                background-color: #ffc3a0;
+            }
+            100% {
+                background-color: #ffa0bd;
+            }
+        }
+ 
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px; /* 调整生日快乐标题和下面文字的间距 */
+        }
+ 
+        h1 {
+            color: #ff69b4;
+            font-size: 28px;
+            margin-bottom: 10px; /* 调整标题和图片之间的间距 */
+        }
+ 
+        img {
+            width: 200px;
+            border-radius: 50%;
+            margin: 1px 0px; /* 调整图片和下方文字之间的间距 */
+        }
+ 
+        p {
+            color: #333;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+ 
+        .fade-in {
+            opacity: 0;
+            animation: fadeInAnimation 2s forwards;
+        }
+ 
+        @keyframes fadeInAnimation {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+ 
+        #countdown {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+ 
+        .time {
+            font-size: 36px;
+            margin: 0 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            animation-fill-mode: forwards;
+        }
+ 
+        #days {
+            background-color: #f5f5f5;
+        }
+ 
+        #hours {
+            background-color: #e0e0e0;
+        }
+ 
+        #minutes {
+            background-color: #d5d5d5;
+        }
+ 
+        #seconds {
+            background-color: #cccccc;
+        }
+ 
+        .time span {
+            display: inline-block;
+            font-size: 14px;
+            margin-top: 5px;
+            color: #333;
+        }
+ 
+        .ribbon {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+ 
+        .ribbon:before,
+        .ribbon:after {
+            content: "";
+            position: absolute;
+            display: block;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(to bottom, #ff69b4, #ffc3a0, #ffafbd);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: ribbonAnimation 2s infinite;
+        }
+ 
+        .ribbon:before {
+            top: -100px;
+            left: -50px;
+        }
+ 
+        .ribbon:after {
+            top: -100px;
+            right: -50px;
+        }
+ 
+        /* 定义彩带动画 */
+        @keyframes ribbonAnimation {
+            0% {
+                transform: translate(0, 0) rotate(0);
+            }
+            100% {
+                transform: translate(-800px, -800px) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="snow-container"></div>
+ 
+<div class="fade-in">
+    <h1>Welcome to the world of Fate's Light</h1>
+    <p>After reading, remember to like, collect, and review. Hahaha.</p>
+</div>
+ 
+<div class="container">
+    <h1>生日快乐！</h1>
+    <div id="slideshow">
+        <img src="1.jpeg" alt="Image 1" class="active">
+        <img src="2.jpeg" alt="Image 2">
+        <img src="3.jpeg" alt="Image 3">
+    </div>
+    <p>亲爱的命运之光，</p>
+    <p>祝你生日快乐！愿你的生日充满欢乐、幸福和美好的回忆。</p>
+    <p>在这特殊的日子里，我希望你能享受每一刻，并和亲朋好友一起度过一个美好的时光。</p>
+    <p>再次祝你生日快乐！</p>
+</div>
+ 
+<div id="countdown">
+    <div class="time" id="days"></div>
+    <div class="time" id="hours"></div>
+    <div class="time" id="minutes"></div>
+    <div class="time" id="seconds"></div>
+</div>
+ 
+<script>
+    // 设置生日日期（月从0开始计数）
+    const birthday = new Date("2024-09-30");
+ 
+    function updateCountdown() {
+        const now = new Date();
+        const difference = birthday - now;
+ 
+        // 计算剩余的天数、小时数、分钟数和秒数
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((difference / 1000 / 60) % 60);
+        const seconds = Math.floor((difference / 1000) % 60);
+ 
+        // 更新倒计时显示
+        document.getElementById("days").textContent = days.toString().padStart(2, "0") + "天";
+        document.getElementById("hours").textContent = hours.toString().padStart(2, "0") + "小时";
+        document.getElementById("minutes").textContent = minutes.toString().padStart(2, "0") + "分钟";
+        document.getElementById("seconds").textContent = seconds.toString().padStart(2, "0") + "秒";
+    }
+ 
+    // 每秒更新一次倒计时
+    setInterval(updateCountdown, 1000);
+</script>
+ 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var currentIndex = 0;
+        var slides = $('#slideshow img');
+        var slideCount = slides.length;
+ 
+        function showSlide(index) {
+            slides.removeClass('active');
+            slides.eq(index).addClass('active');
+        }
+ 
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % slideCount;
+            showSlide(currentIndex);
+        }
+ 
+        // 自动播放幻灯片
+        setInterval(nextSlide, 3000);
+ 
+        // 初始化显示第一张幻灯片
+        showSlide(currentIndex);
+    });
+</script>
+<script>
+    function createSnowflake() {
+        const snowflake = document.createElement('div');
+        snowflake.classList.add('snowflake');
+        snowflake.style.left = Math.random() * window.innerWidth + 'px';
+        snowflake.style.animationDuration = Math.random() * 5 + 5 + 's';
+        snowflake.style.opacity = Math.random();
+        snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
+ 
+        const randomColor = getRandomColor();
+        snowflake.style.backgroundColor = randomColor;
+ 
+        snowflake.innerHTML = '生日快乐❤️'; // You can customize the snowflake symbol here
+ 
+        return snowflake;
+    }
+ 
+    function getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+ 
+    function snowfall() {
+        const snowContainer = document.getElementById('snow-container');
+        const numSnowflakes = 50; // Adjust the number of snowflakes here
+ 
+        for (let i = 0; i < numSnowflakes; i++) {
+            const snowflake = createSnowflake();
+            snowContainer.appendChild(snowflake);
+        }
+    }
+ 
+    snowfall();
+</script>
+</body>
+</html>
