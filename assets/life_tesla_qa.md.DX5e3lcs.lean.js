@@ -1,0 +1,1 @@
+import{_ as e,c as t,o as a}from"./chunks/framework.CRCV4hx_.js";const f=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"life/tesla/qa.md","filePath":"life/tesla/qa.md","lastUpdated":1725022801000}'),s={name:"life/tesla/qa.md"};function r(o,c,n,l,i,d){return a(),t("div")}const _=e(s,[["render",r]]);export{f as __pageData,_ as default};
